@@ -26,6 +26,7 @@ Bounce button0 = Bounce(0, 15);
 Bounce button1 = Bounce(1, 15);
 Bounce button2 = Bounce(2, 15);  // 15 = 15 ms debounce time
 Bounce button3 = Bounce(3, 15);
+Bounce button4 = Bounce(4, 15);
 
 // Use these with the Teensy Audio Shield
 #define SDCARD_CS_PIN    10
@@ -60,13 +61,14 @@ void setup() {
   pinMode(1, INPUT_PULLUP);
   pinMode(2, INPUT_PULLUP);
   pinMode(3, INPUT_PULLUP);
+  pinMode(4, INPUT_PULLUP);
   delay(1000);
 }
 
 int filenumber = 0;  // while file to play
 
-const char * filelist[4] = {
-  "SDTEST1.WAV", "SDTEST2.WAV", "SDTEST3.WAV", "SDTEST4.WAV"
+const char * filelist[5] = {
+  "SDTEST1.WAV", "SDTEST2.WAV", "SDTEST3.WAV", "SDTEST4.WAV", "SDTEST5.WAV"
 };
 
 elapsedMillis blinkTime;
@@ -125,6 +127,15 @@ void loop() {
     Serial.println("Start playing SDTEST4");
     delay(10); // wait for library to parse WAV info
   }
+
+
+  button4.update();
+    if (button4.fallingEdge()) {
+    playSdWav1.stop();
+    playSdWav1.play("SDTEST5.WAV");
+    Serial.println("Start playing SDTEST5");
+    delay(10); // wait for library to parse WAV info
+  }
   
   // read the knob position (analog input A2)
   int knob = analogRead(A2);
@@ -133,7 +144,3 @@ void loop() {
   //Serial.print("volume = ");
   //Serial.println(vol);
 }
-
-
-
-
